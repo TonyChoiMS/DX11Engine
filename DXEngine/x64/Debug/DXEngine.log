@@ -1,7 +1,2 @@
-﻿  stdafx.cpp
-  GraphicsClass.cpp
-  InputClass.cpp
-  main.cpp
-  SystemClass.cpp
-  코드를 생성하고 있습니다...
+﻿  GraphicsClass.cpp
   DXEngine.vcxproj -> C:\Users\MinLion\Desktop\스터디자료\DX12\DXEngine\DX11Engine\x64\Debug\DXEngine.exe
