@@ -82,7 +82,7 @@ bool ColorShaderClass::InitializeShader(ID3D11Device* device, HWND hwnd, WCHAR* 
 	}
 
 	// 버퍼로부터 정점 쉐이더를 생성한다.
-	if (FAILED(device->CreateVertexShader((vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader))))
+	if (FAILED(device->CreateVertexShader(vertexShaderBuffer->GetBufferPointer(), vertexShaderBuffer->GetBufferSize(), NULL, &m_vertexShader)))
 	{
 		return false;
 	}
