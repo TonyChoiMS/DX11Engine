@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CommandQueue.h"
 #include "SwapChain.h"
-#include "DescriptorHeap.h"
 
 CommandQueue::~CommandQueue()
 {
@@ -11,10 +10,9 @@ CommandQueue::~CommandQueue()
 }
 
 // 디바이스를 이용해서 커맨드큐를 만들기 때문에 디바이스는 필수적.
-void CommandQueue::Init(ComPtr<ID3D12Device> device, shared_ptr<SwapChain> swapChain, shared_ptr<DescriptorHeap> descHeap)
+void CommandQueue::Init(ComPtr<ID3D12Device> device, shared_ptr<SwapChain> swapChain)
 {
 	_swapChain = swapChain;
-	_descHeap = descHeap;
 
 	D3D12_COMMAND_QUEUE_DESC queueDesc = {};
 	queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
@@ -76,7 +74,7 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT * vp, const D3D12_RECT * rec
 
 	// 현재 버퍼와 백버퍼를 교체하는 일을 예약
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		_swapChain->GetCurretnBackBufferResource().Get(),
+		_swapChain->GetBackRTVBuffer().Get(),
 		D3D12_RESOURCE_STATE_PRESENT,	// 화면 출력
 		D3D12_RESOURCE_STATE_RENDER_TARGET);		// 결과물
 
@@ -88,7 +86,7 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT * vp, const D3D12_RECT * rec
 
 	// Specify the buffers we are going to render to.
 	// 백버퍼를 꺼내온 다음에, 거기에 대상으로 GPU에게 일을 하면 된다고 알려줌.
-	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = _descHeap->GetBackBufferView();
+	D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = _swapChain->GetBackRTV();
 	_cmdList->ClearRenderTargetView(backBufferView, Colors::LightSteelBlue, 0, nullptr);
 	_cmdList->OMSetRenderTargets(1, &backBufferView, FALSE, nullptr);
 }
@@ -97,7 +95,7 @@ void CommandQueue::RenderEnd()
 {
 	// 렌더가 끝났으므로 백버퍼를 다시 렌더링 용으로 바꿔치기함.
 	D3D12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
-		_swapChain->GetCurretnBackBufferResource().Get(),
+		_swapChain->GetBackRTVBuffer().Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,		// 결과물
 		D3D12_RESOURCE_STATE_PRESENT);			// 화면 출력
 
