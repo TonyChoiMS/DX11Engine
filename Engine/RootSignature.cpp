@@ -1,9 +1,15 @@
 #include "pch.h"
 #include "RootSignature.h"
 
+// constant buffer : hlsl bindslot => b로 시작
+
 void RootSignature::Init(ComPtr<ID3D12Device> device)
 {
-	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(D3D12_DEFAULT);
+	CD3DX12_ROOT_PARAMETER param[2];
+	param[0].InitAsConstantBufferView(0);		// 0번 -> b0 -> CBV, 버퍼에 있는 어떤 View를 가리키고 있는지 알려주는 일종의 포인터
+	param[1].InitAsConstantBufferView(1);		// 1번 -> b1 -> CBV
+
+	D3D12_ROOT_SIGNATURE_DESC sigDesc = CD3DX12_ROOT_SIGNATURE_DESC(2, param);
 	sigDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT; // 입력 조립기 단계
 
 	ComPtr<ID3DBlob> blobSignature;
