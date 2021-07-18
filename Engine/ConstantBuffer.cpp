@@ -80,15 +80,21 @@ void ConstantBuffer::Clear()
 	_currentIndex = 0;
 }
 
-void ConstantBuffer::PushData(int32 rootParamIndex, void* buffer, uint32 size)
+D3D12_CPU_DESCRIPTOR_HANDLE ConstantBuffer::PushData(int32 rootParamIndex, void* buffer, uint32 size)
 {
 	assert(_currentIndex < _elementSize);
 
 	::memcpy(&_mappedBuffer[_currentIndex * _elementSize], buffer, size);
 
-	D3D12_GPU_VIRTUAL_ADDRESS address = GetGpuVirtualAddress(_currentIndex);
-	CMD_LIST->SetGraphicsRootConstantBufferView(rootParamIndex, address);
+	// TableDescriptorHeap이 생겼으므로 여기서 바로 뷰를 커맨드큐에 집어넣으면 크래시
+	/*D3D12_GPU_VIRTUAL_ADDRESS address = GetGpuVirtualAddress(_currentIndex);
+	CMD_LIST->SetGraphicsRootConstantBufferView(rootParamIndex, address);*/
+
+	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle = GetCpuHandle(_currentIndex);
+
 	_currentIndex++;
+
+	return cpuHandle;
 }
 
 D3D12_GPU_VIRTUAL_ADDRESS ConstantBuffer::GetGpuVirtualAddress(uint32 index)
