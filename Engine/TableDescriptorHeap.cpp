@@ -35,6 +35,18 @@ void TableDescriptorHeap::SetCBV(D3D12_CPU_DESCRIPTOR_HANDLE srcHandle, CBV_REGI
 	DEVICE->CopyDescriptors(1, &destHandle, &desctRange, 1, &srcHandle, &srcRange, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 }
 
+void TableDescriptorHeap::SetSRV(D3D12_CPU_DESCRIPTOR_HANDLE srcHandle, SRV_REGISTER reg)
+{
+	// dest - destination을 받아서 
+	D3D12_CPU_DESCRIPTOR_HANDLE destHandle = GetCPUHandle(reg);
+
+	uint32 desctRange = 1;
+	uint32 srcRange = 1;
+	// srcHandle -> 원래 위치
+	// destHandle -> 목적지 위치
+	DEVICE->CopyDescriptors(1, &destHandle, &desctRange, 1, &srcHandle, &srcRange, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+}
+
 // GPU 램에서 레지스터로 올려보내는 작업.
 // SetGraphicRootDescriptorTable
 // 현재 내 그룹 인덱스에 해당하는 테이블을 레지스터로 올림.
@@ -54,7 +66,12 @@ D3D12_CPU_DESCRIPTOR_HANDLE TableDescriptorHeap::GetCPUHandle(CBV_REGISTER reg)
 	return GetCPUHandle(static_cast<uint32>(reg));
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE TableDescriptorHeap::GetCPUHandle(uint32 reg)
+D3D12_CPU_DESCRIPTOR_HANDLE TableDescriptorHeap::GetCPUHandle(SRV_REGISTER reg)
+{
+	return GetCPUHandle(static_cast<uint32>(reg));
+}
+
+D3D12_CPU_DESCRIPTOR_HANDLE TableDescriptorHeap::GetCPUHandle(uint8 reg)
 {
 	D3D12_CPU_DESCRIPTOR_HANDLE handle = _descHeap->GetCPUDescriptorHandleForHeapStart();
 	// 그룹사이즈 (몇동)

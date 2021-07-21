@@ -14,8 +14,11 @@ public:
 	void RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect);
 	void RenderEnd();
 
+	void FlushResourceCommandQueue();
+
 	ComPtr<ID3D12CommandQueue> GetCmdQueue() { return _cmdQueue; }
 	ComPtr<ID3D12GraphicsCommandList> GetCmdList() { return	_cmdList; }
+	ComPtr<ID3D12GraphicsCommandList> GetResourceCmdList() { return	_resCmdList; }
 
 private:
 	// 이 3개가 핵심.
@@ -25,6 +28,9 @@ private:
 	ComPtr<ID3D12CommandQueue>			_cmdQueue;		// 일감 목록	
 	ComPtr<ID3D12CommandAllocator>		_cmdAlloc;		// 일감 자체를 넣어주기 위한 메모리 공간을 할당
 	ComPtr<ID3D12GraphicsCommandList>	_cmdList;		// 일감 리스트
+
+	ComPtr<ID3D12CommandAllocator>		_resCmdAlloc;		// 리소스를 로드하는 용도의 메모리 공간을 할당
+	ComPtr<ID3D12GraphicsCommandList>	_resCmdList;		// 리소스를 로드하는 용도의 리스트
 
 	// Fence : 울타리(?)
 	// CPU / GPU 동기화를 위한 간단한 도구
