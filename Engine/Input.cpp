@@ -23,11 +23,18 @@ void Input::Update()
 		return;
 	}
 
+	BYTE asciiKeys[KEY_TYPE_COUNT] = {};
+
+	//255개의 가상키보드 키 상태를 받아온다.
+	if (::GetKeyboardState(asciiKeys) == false)
+		return;
+
 	for (uint32 key = 0; key < KEY_TYPE_COUNT; key++)
 	{
 		// window API 키 체크하는 함수.
 		// 키가 눌려 있으면 true
-		if (::GetAsyncKeyState(key) & 0x8000)
+		//if (::GetAsyncKeyState(key) & 0x8000)
+		if (asciiKeys[key] & 0x80)
 		{
 			KEY_STATE& state = _states[key];
 

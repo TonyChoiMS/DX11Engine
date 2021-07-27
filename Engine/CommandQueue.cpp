@@ -86,7 +86,8 @@ void CommandQueue::RenderBegin(const D3D12_VIEWPORT* vp, const D3D12_RECT* rect)
 		D3D12_RESOURCE_STATE_RENDER_TARGET); // 결과물
 
 	_cmdList->SetGraphicsRootSignature(ROOT_SIGNATURE.Get());
-	GEngine->GetCB()->Clear();
+	GEngine->GetConstantBuffer(CONSTANT_BUFFER_TYPE::TRANSFORM)->Clear();
+	GEngine->GetConstantBuffer(CONSTANT_BUFFER_TYPE::MATERIAL)->Clear();
 	GEngine->GetTableDescHeap()->Clear();
 
 	// SetDescriptorHeaps 함수는 매우 무거운 함수이므로, 프레임마다 한번씩만 호출되게 한다.

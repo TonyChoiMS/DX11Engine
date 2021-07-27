@@ -24,7 +24,7 @@ enum class KEY_STATE
 
 enum
 {
-	KEY_TYPE_COUNT = static_cast<int32>(UINT8_MAX),		// 1byte 만큼 다 사용하기 위해 UINT8_MAX 사용
+	KEY_TYPE_COUNT = static_cast<int32>(UINT8_MAX + 1),		// 1byte  만큼 다 사용하기 위해 UINT8_MAX(255) + 1 사용 0 ~ 255
 	KEY_STATE_COUNT = static_cast<int32>(KEY_STATE::END),
 };
 

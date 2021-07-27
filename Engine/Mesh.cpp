@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Mesh.h"
 #include "Engine.h"
+#include "Material.h"
 
 // CreateCommittedResource			GPU쪽의 공간 할당
 // _vertexBuffer => CPU가 아닌 GPU의 메모리 공간을 가리키는 버퍼
@@ -21,14 +22,11 @@ void Mesh::Render()
 	// 1) Buffer에 데이터 세팅(즉시 발생)
 	// 2) TableDescHeap에다가 CBV 전달
 	// 3) 모두 세팅이 끝났으면 TableDescHeap 커밋
-	{
-		D3D12_CPU_DESCRIPTOR_HANDLE handle = GEngine->GetCB()->PushData(0, &_transform, sizeof(_transform));
-		GEngine->GetTableDescHeap()->SetCBV(handle, CBV_REGISTER::b0);
 
-		// 텍스쳐의 핸들을 받아서 우리가 원하는 레지스터에 데이터를 넣어줄 수 있는 코드. 
-		// 매우매우 비싼 함수.
-		GEngine->GetTableDescHeap()->SetSRV(_tex->GetCpuHandle(), SRV_REGISTER::t0);
-	}
+	// 첫번째 CBV는 transform으로 이용.
+	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushData(&_transform, sizeof(_transform));
+	
+	_mat->Update();
 	
 	GEngine->GetTableDescHeap()->CommitTable();
 
