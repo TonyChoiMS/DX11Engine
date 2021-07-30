@@ -32,6 +32,8 @@ enum
 // 윈도우 환경 뿐만 아니라 다른 환경에서도 동작 가능할 수 있도록 키 맵핑을 한 뒤 작업 진행.
 class Input
 {
+	DECLARE_SINGLE(Input);
+
 public:
 	void Init(HWND hwnd);
 	void Update();

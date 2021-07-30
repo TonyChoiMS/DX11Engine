@@ -23,11 +23,6 @@ void Mesh::Render()
 	// 2) TableDescHeap에다가 CBV 전달
 	// 3) 모두 세팅이 끝났으면 TableDescHeap 커밋
 
-	// 첫번째 CBV는 transform으로 이용.
-	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushData(&_transform, sizeof(_transform));
-	
-	_mat->Update();
-	
 	GEngine->GetTableDescHeap()->CommitTable();
 
 	// DrawInstanced : 버텍스를 이용해서 그려주는 함수.
