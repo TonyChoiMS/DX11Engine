@@ -18,6 +18,7 @@ using namespace std;
 namespace fs = std::filesystem;
 
 #include "d3dx12.h"
+#include "SimpleMath.h"			// 오른손 좌표계를 사용함.
 #include <d3d12.h>
 #include <wrl.h>
 #include <d3dcompiler.h>
@@ -53,10 +54,10 @@ using uint8		= unsigned __int8;
 using uint16	= unsigned __int16;
 using uint32	= unsigned __int32;
 using uint64	= unsigned __int64;
-using Vec2		= XMFLOAT2;
-using Vec3		= XMFLOAT3;
-using Vec4		= XMFLOAT4;
-using Matrix	= XMMATRIX;
+using Vec2		= DirectX::SimpleMath::Vector2;
+using Vec3		= DirectX::SimpleMath::Vector3;
+using Vec4		= DirectX::SimpleMath::Vector4;
+using Matrix	= DirectX::SimpleMath::Matrix;
 
 enum class CBV_REGISTER
 {
