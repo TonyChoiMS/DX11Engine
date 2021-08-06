@@ -8,6 +8,7 @@ enum class COMPONENT_TYPE : uint8
 	MESH_RENDERER,
 	// ...
 	MONO_BEHAVIOUR,
+	CAMERA,
 	END,
 };
 
