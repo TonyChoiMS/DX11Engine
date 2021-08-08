@@ -43,6 +43,17 @@ void Camera::FinalUpdate()
 
 void Camera::Render()
 {
-	// 53:24부터 다시 시작
+	shared_ptr<Scene> scene = GET_SINGLE(SceneManager)->GetActiveScene();
+
+	// TODO :: Layer 구분
+	const vector<shared_ptr<GameObject>>& gameObjects = scene->GetGameObjects();
+
+	for (auto& gameObject : gameObjects)
+	{
+		if (gameObject->GetMeshRenderer() == nullptr)
+			continue;
+
+		gameObject->GetMeshRenderer()->Render();
+	}
 }
 

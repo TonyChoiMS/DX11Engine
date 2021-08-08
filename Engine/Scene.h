@@ -17,6 +17,8 @@ public:
 	void AddGameObject(shared_ptr<GameObject> gameObject);
 	void RemoveGameObject(shared_ptr<GameObject> gameObject);
 
+	const vector<shared_ptr<GameObject>> GetGameObjects() { return _gameObjects; }
+
 private:
 	// TODO :: GameObject를 layer단위로 분류해서 관리할 수 있는 기능 추가 필요.
 	vector<shared_ptr<GameObject>> _gameObjects;

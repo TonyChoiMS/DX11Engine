@@ -33,6 +33,7 @@ void Engine::Update()
 {
 	GET_SINGLE(Input)->Update();
 	GET_SINGLE(Timer)->Update();
+	GET_SINGLE(SceneManager)->Update();
 
 	Render();
 
@@ -43,7 +44,8 @@ void Engine::Render()
 {
 	RenderBegin();
 
-	GET_SINGLE(SceneManager)->Update();
+	// 업데이트가 모두 완료된 이후에 렌더를 할 수 있도록 처리.
+	GET_SINGLE(SceneManager)->Render();
 
 	RenderEnd();
 }
