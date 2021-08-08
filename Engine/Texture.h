@@ -1,9 +1,12 @@
 #pragma once
+#include "Object.h"
 
 // 딱 한번만 로딩해서 그 텍스쳐를 계속 사용한다.
-class Texture
+class Texture : public Object
 {
 public:
+	Texture();
+	virtual ~Texture();
 	void Init(const wstring& path);
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCpuHandle() { return _srvHandle; }

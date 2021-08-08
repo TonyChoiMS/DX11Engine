@@ -3,6 +3,14 @@
 #include "Engine.h"
 #include "Material.h"
 
+Mesh::Mesh() : Object(OBJECT_TYPE::MESH)
+{
+}
+
+Mesh::~Mesh()
+{
+}
+
 // CreateCommittedResource			GPU쪽의 공간 할당
 // _vertexBuffer => CPU가 아닌 GPU의 메모리 공간을 가리키는 버퍼
 // 인풋은 정점(Vertex) 정보, 인

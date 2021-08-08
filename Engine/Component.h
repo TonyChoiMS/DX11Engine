@@ -1,4 +1,5 @@
 #pragma once
+#include "Object.h"
 
 // 다른 컴포넌트들은 하나씩밖에 가질 수 없지만,
 // MonoBehaviour는 여러개를 가질 수 있다.
@@ -20,7 +21,7 @@ enum
 class GameObject;
 class Transform;
 
-class Component
+class Component : public Object
 {
 public:
 	Component(COMPONENT_TYPE type);
