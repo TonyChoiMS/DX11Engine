@@ -111,6 +111,9 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Object\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Object\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -198,6 +201,9 @@
       <Filter>Object\Component</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
+      <Filter>Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
       <Filter>Object\Component</Filter>
     </ClInclude>
   </ItemGroup>
