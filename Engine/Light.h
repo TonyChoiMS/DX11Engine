@@ -23,7 +23,7 @@ struct LightInfo
 	int32 lightType;		// shader와 padding을 맞추기 위해 enum이 int8이어도 여기는 int32로 정의.
 	float range;			// 빛의 최대 범위
 	float angle;			// 빛이 비추는 각도
-	int32 padding;			// LightInfo 데이터의 사이즈를 16배수로 맞추기 위해서 사용.
+	int32 padding;			// PackingRule!!! 어떤 구조체를 만들때 구조체가 실질적으로 메모리에 올라가는 메모리 정렬 순서. LightInfo 데이터의 사이즈를 16배수로 맞추기 위해서 사용.
 };
 
 // 쉐이더에 넘겨줄 빛 데이터
@@ -42,7 +42,7 @@ public:
 	Light();
 	virtual ~Light();
 
-	virtual void FinalUPdate() override;
+	virtual void FinalUpdate() override;
 
 public:
 	const LightInfo& GetLightInfo() { return _lightInfo; }

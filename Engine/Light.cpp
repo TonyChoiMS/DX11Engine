@@ -10,7 +10,7 @@ Light::~Light()
 {
 }
 
-void Light::FinalUPdate()
+void Light::FinalUpdate()
 {
 	_lightInfo.position = GetTransform()->GetWorldPosition();
 }

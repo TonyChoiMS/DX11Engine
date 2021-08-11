@@ -63,6 +63,7 @@ enum class CBV_REGISTER
 {
 	b0,
 	b1, 
+	b2,
 	b3, 
 	b4,
 
@@ -138,6 +139,10 @@ public:								\
 
 struct TransformParams
 {
+	Matrix matWorld;
+	Matrix matView;
+	Matrix matProjection;
+	Matrix matWV;
 	Matrix matWVP;
 };
 extern unique_ptr<class Engine> GEngine;
