@@ -56,7 +56,7 @@ void TableDescriptorHeap::CommitTable()
 	handle.ptr += _currentGroupIndex * _groupSize;
 
 	// 커맨드리스트에 SetDescriptorHeaps가 먼저 있지 않으면 크래시 발생.
-	CMD_LIST->SetGraphicsRootDescriptorTable(0, handle);
+	CMD_LIST->SetGraphicsRootDescriptorTable(1, handle);
 
 	_currentGroupIndex++;
 }
