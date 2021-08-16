@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "Frustum.h"
 
 // 원근 투영을 해주는 카메라와 직교 투영을 해주는 카메라 2가지로 분류.
 enum class PROJECTION_TYPE
@@ -27,6 +28,8 @@ private:
 	// 카메라가 여러대가 될 수 있으므로, View와 Projection 행렬은 카메라가 가지고 있는게 맞습니다.
 	Matrix _matView = {};
 	Matrix _matProjection = {};
+
+	Frustum _frustum;
 
 public:
 	// TEMP
