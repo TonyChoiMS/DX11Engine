@@ -12,6 +12,8 @@ class Resources
 	DECLARE_SINGLE(Resources);
 
 public:
+	void Init();
+
 	// 템플릿으로 사용하는 이유 : Resources에는 다양한 클래스가 들어있기 때문에,
 	// 그것들의 공통적인 기능들을 모두 아울러서 처리하기 위함.
 	template<typename T> 
@@ -26,8 +28,12 @@ public:
 	template<typename T>
 	OBJECT_TYPE GetObjectType();
 
+	shared_ptr<Mesh> LoadRectangleMesh();
 	shared_ptr<Mesh> LoadCubeMesh();
 	shared_ptr<Mesh> LoadSphereMesh();
+
+private:
+	void CreateDefaultShader();
 
 private:
 	using KeyObjMap = std::map<wstring/*key*/, shared_ptr<Object>>;
@@ -54,7 +60,7 @@ inline shared_ptr<T> Resources::Load(const wstring& key, const wstring& path)
 
 	// 만들어놓은 것이 없으면, 파일을 읽어와서 새로운 오브젝트를 생성합니다.
 	shared_ptr<T> object = make_shared<T>();
-	object->load(path);
+	object->Load(path);
 	keyObjMap[key] = object;
 
 	return object;
