@@ -152,6 +152,9 @@ void Texture::CreateFromResource(ComPtr<ID3D12Resource> tex2D)
 			heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
 			heapDesc.NodeMask = 0;
 			DEVICE->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&_rtvHeap));
+
+			D3D12_CPU_DESCRIPTOR_HANDLE rtvHeapBegin = _rtvHeap->GetCPUDescriptorHandleForHeapStart();
+			DEVICE->CreateRenderTargetView(_tex2D.Get(), nullptr, rtvHeapBegin);
 		}
 
 		// SRV

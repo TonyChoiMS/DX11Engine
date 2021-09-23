@@ -99,7 +99,54 @@ void Engine::CreateConstantBuffer(CBV_REGISTER reg, uint32 bufferSize, uint32 co
 	_constantBuffers.push_back(buffer);
 }
 
+// 초기화 할 때 모든 부품들을 만들어주는 함수.
+// DepthBuffer 클래스를 대신하는 함수.
 void Engine::CreateRenderTargetGroups()
 {
+	// DepthStencil
+	shared_ptr<Texture> dsTexture = GET_SINGLE(Resources)->CreateTexture(L"DepthStencil",
+		DXGI_FORMAT_D32_FLOAT, _window.width, _window.height,
+		CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+		D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
 
+	// SwapChain Group
+	{
+		vector<RenderTarget> rtVec(SWAP_CHAIN_BUFFER_COUNT);
+
+		// 전면 버퍼와 후면 버퍼의 SwapChain을 꺼내옴.
+		for (uint32 i = 0; i <SWAP_CHAIN_BUFFER_COUNT; ++i)
+		{
+			wstring name = L"SwapChainTarget_" + std::to_wstring(i);
+
+			ComPtr<ID3D12Resource> resource;
+			_swapChain->GetSwapChain()->GetBuffer(i, IID_PPV_ARGS(&resource));
+			rtVec[i].target = GET_SINGLE(Resources)->CreateTextureFromResource(name, resource);
+		}
+
+		_rtGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)] = make_shared<RenderTargetGroup>();
+		_rtGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN)]->Create(RENDER_TARGET_GROUP_TYPE::SWAP_CHAIN, rtVec, dsTexture);
+	}
+
+	//Deferred Group
+	{
+		vector<RenderTarget> rtVec(RENDER_TARGET_G_BUFFER_GROUP_MEMBER_COUNT);
+
+		rtVec[0].target = GET_SINGLE(Resources)->CreateTexture(L"PositionTarget",
+			DXGI_FORMAT_R32G32B32A32_FLOAT, _window.width, _window.height,
+			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+			D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
+
+		rtVec[1].target = GET_SINGLE(Resources)->CreateTexture(L"NormalTarget",
+			DXGI_FORMAT_R32G32B32A32_FLOAT, _window.width, _window.height,
+			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+			D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
+
+		rtVec[2].target = GET_SINGLE(Resources)->CreateTexture(L"DiffuseTarget",
+			DXGI_FORMAT_R8G8B8A8_UNORM, _window.width, _window.height,
+			CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+			D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET);
+
+		_rtGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)] = make_shared<RenderTargetGroup>();
+		_rtGroups[static_cast<uint8>(RENDER_TARGET_GROUP_TYPE::G_BUFFER)]->Create(RENDER_TARGET_GROUP_TYPE::G_BUFFER, rtVec, dsTexture);
+	}
 }

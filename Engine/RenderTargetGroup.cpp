@@ -48,7 +48,12 @@ void RenderTargetGroup::OMSetRenderTargets()
 
 void RenderTargetGroup::ClearRenderTargetView(uint32 index)
 {
+	// Specify the buffers we are going to render to.
+	// 백버퍼를 꺼내온 다음에, 거기에 대상으로 GPU에게 일을 하면 된다고 알려줌.
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(_rtvHeapBegin, index * _rtvHeapSize);
+	assert(this != nullptr);
+	assert(_rtvHeap != nullptr);
+	assert(rtvHandle.ptr != NULL);
 	CMD_LIST->ClearRenderTargetView(rtvHandle, _rtVec[index].clearColor, 0, nullptr);
 
 	CMD_LIST->ClearDepthStencilView(_dsvHeapBegin, D3D12_CLEAR_FLAG_DEPTH, 1.f, 0, 0, nullptr);
@@ -56,9 +61,12 @@ void RenderTargetGroup::ClearRenderTargetView(uint32 index)
 
 void RenderTargetGroup::ClearRenderTargetView()
 {
+	// depth buffer를 1.0으로 초기화.
+	// Deferred Group 초기화
 	for (uint32 i = 0; i < _rtCount; i++)
 	{
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(_rtvHeapBegin, i * _rtvHeapSize);
+		assert(this != nullptr);
 		CMD_LIST->ClearRenderTargetView(rtvHandle, _rtVec[i].clearColor, 0, nullptr);
 	}
 

@@ -30,7 +30,7 @@ public:
 	void OMSetRenderTargets(uint32 count, uint32 offset);
 	void OMSetRenderTargets();
 
-	void ClearRenderTargetView(uint32 index);
+	void ClearRenderTargetView(uint32 index);	
 	void ClearRenderTargetView();
 
 	shared_ptr<Texture> GetRTTexture(uint32 index) { return _rtVec[index].target; }
@@ -47,6 +47,5 @@ private:
 	uint32 _rtvHeapSize;
 	D3D12_CPU_DESCRIPTOR_HANDLE _rtvHeapBegin;
 	D3D12_CPU_DESCRIPTOR_HANDLE _dsvHeapBegin;
-
 };
 

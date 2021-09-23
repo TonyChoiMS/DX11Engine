@@ -6,6 +6,8 @@
 #include "GameObject.h"
 #include "MeshRenderer.h"
 #include "Engine.h"
+#include "Material.h"
+#include "Shader.h"
 
 Matrix Camera::S_MatView;
 Matrix Camera::S_MatProjection;
@@ -40,15 +42,13 @@ void Camera::FinalUpdate()
 	_frustum.FinalUpdate();
 }
 
-void Camera::Render()
+void Camera::SortGameObject()
 {
-	S_MatView = _matView;
-	S_MatProjection = _matProjection;
-
 	shared_ptr<Scene> scene = GET_SINGLE(SceneManager)->GetActiveScene();
-
-	// TODO :: Layer 구분
 	const vector<shared_ptr<GameObject>>& gameObjects = scene->GetGameObjects();
+
+	_vecForward.clear();
+	_vecDeffered.clear();
 
 	for (auto& gameObject : gameObjects)
 	{
@@ -57,7 +57,7 @@ void Camera::Render()
 
 		if (IsCulled(gameObject->GetLayerIndex()))
 			continue;
-
+		
 		// Frustum을 체크하지 않을 게임오브젝트는 패스.
 		if (gameObject->GetCheckFrustum())
 		{
@@ -69,7 +69,37 @@ void Camera::Render()
 			}
 		}
 
+		SHADER_TYPE shaderType = gameObject->GetMeshRenderer()->GetMaterial()->GetShader()->GetShaderType();
+		switch (shaderType)
+		{
+		case SHADER_TYPE::DEFERRED:
+			_vecDeffered.push_back(gameObject);
+			break;
+		case SHADER_TYPE::FORWARD:
+			_vecForward.push_back(gameObject);
+			break;
+		}
+	}
+}
+
+void Camera::Render_Deferred()
+{
+	S_MatView = _matView;
+	S_MatProjection = _matProjection;
+
+	for (auto& gameObject : _vecDeffered)
+	{
 		gameObject->GetMeshRenderer()->Render();
 	}
 }
 
+void Camera::Render_Forward()
+{
+	S_MatView = _matView;
+	S_MatProjection = _matProjection;
+
+	for (auto& gameObject : _vecForward)
+	{
+		gameObject->GetMeshRenderer()->Render();
+	}
+}

@@ -1,5 +1,5 @@
-#ifndef _DEFFERED_FX_
-#define _DEFFERED_FX_
+#ifndef _DEFERRED_FX_
+#define _DEFERRED_FX_
 
 #include "params.fx"
 
