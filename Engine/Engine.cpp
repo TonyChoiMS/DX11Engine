@@ -26,6 +26,8 @@ void Engine::Init(const WindowInfo& info)
 	CreateConstantBuffer(CBV_REGISTER::b1, sizeof(TransformParams), 256);
 	CreateConstantBuffer(CBV_REGISTER::b2, sizeof(MaterialParams), 256);
 
+	CreateRenderTargetGroups();
+
 	ResizeWindow(info.width, info.height);
 	
 	GET_SINGLE(Input)->Init(info.hwnd);
@@ -75,7 +77,6 @@ void Engine::ResizeWindow(int32 width, int32 height)
 	::AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 	::SetWindowPos(_window.hwnd, 0, 100, 100, width, height, 0);
 
-	_depthStencilBuffer->Init(_window);
 }
 
 void Engine::ShowFps()
@@ -96,4 +97,9 @@ void Engine::CreateConstantBuffer(CBV_REGISTER reg, uint32 bufferSize, uint32 co
 	shared_ptr<ConstantBuffer> buffer = make_shared<ConstantBuffer>();
 	buffer->Init(reg, bufferSize, count);
 	_constantBuffers.push_back(buffer);
+}
+
+void Engine::CreateRenderTargetGroups()
+{
+
 }
