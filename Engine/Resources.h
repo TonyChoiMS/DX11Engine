@@ -41,6 +41,7 @@ public:
 
 private:
 	void CreateDefaultShader();
+	void CreateDefaultMaterial();
 
 private:
 	using KeyObjMap = std::map<wstring/*key*/, shared_ptr<Object>>;
@@ -125,5 +126,4 @@ inline OBJECT_TYPE Resources::GetObjectType()
 		return OBJECT_TYPE::COMPONENT;
 	else
 		return OBJECT_TYPE::NONE;
-	return OBJECT_TYPE();
 }

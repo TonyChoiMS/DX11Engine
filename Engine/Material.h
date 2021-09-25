@@ -6,9 +6,10 @@ class Texture;
 
 enum
 {
-	MATERIAL_INT_COUNT = 5,
-	MATERIAL_FLOAT_COUNT = 5,
-	MATERIAL_TEXTURE_COUNT = 5,
+	MATERIAL_INT_COUNT = 4,
+	MATERIAL_FLOAT_COUNT = 4,
+	MATERIAL_TEXTURE_COUNT = 4,
+	MATERIAL_VECTOR2_COUNT = 4
 };
 
 struct MaterialParams
@@ -16,7 +17,8 @@ struct MaterialParams
 	void SetInt(uint8 index, int32 value) { intParams[index] = value; }
 	void SetFloat(uint8 index, float value) { floatParams[index] = value; }
 	void SetTexOn(uint8 index, int32 value) { texOnParams[index] = value; }
-
+	void SetVec2(uint8 index, Vec2 value) { vec2Params[index] = value; }
+	
 	// array는 vector와 유사하지만, 동적 가변 배열은 아니고, 정적 크기 배열입니다.
 	// 배열을 Wrapping하는 클래스
 	// C스타일의 배열을 사용할 경우, 디버그 모드에서 에러를 찾기 힘들 수 있는데, 
@@ -24,6 +26,7 @@ struct MaterialParams
 	array<int32, MATERIAL_INT_COUNT> intParams;
 	array<float, MATERIAL_FLOAT_COUNT> floatParams;
 	array<int32, MATERIAL_TEXTURE_COUNT> texOnParams;
+	array<Vec2, MATERIAL_VECTOR2_COUNT> vec2Params;
 };
 
 
@@ -39,10 +42,15 @@ public:
 	void SetFloat(uint8 index, float value) { _params.SetFloat(index, value); }
 	void SetTexture(uint8 index, shared_ptr<Texture> texture) 
 	{ 
-		_textures[index] = texture; 
+		_textures[index] = texture;
+		if (texture == nullptr)
+		{
+			printf("12344");
+		}
 		_params.SetTexOn(index, (texture == nullptr ? 0 : 1));
 	}
 
+	void SetVec2(uint8 index, Vec2 value) { _params.SetVec2(index, value); }
 	void PushData();
 
 private:

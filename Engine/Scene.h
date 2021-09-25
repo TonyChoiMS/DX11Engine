@@ -15,6 +15,8 @@ public:
 	void FinalUpdate();
 
 	void Render();
+	void RenderLights();
+	void RenderFinal();
 
 private:
 	void PushLightData();
@@ -28,5 +30,7 @@ public:
 private:
 	// TODO :: GameObject를 layer단위로 분류해서 관리할 수 있는 기능 추가 필요.
 	vector<shared_ptr<GameObject>> _gameObjects;
+	vector<shared_ptr<class Camera>> _cameras;
+	vector<shared_ptr<class Light>> _lights;
 };
 
