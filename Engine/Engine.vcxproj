@@ -208,6 +208,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SimpleMath.h" />
+    <ClInclude Include="StructuredBuffered.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="TableDescriptorHeap.h" />
     <ClInclude Include="TestCameraScript.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="SimpleMath.cpp" />
+    <ClCompile Include="StructuredBuffered.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="TableDescriptorHeap.cpp" />
     <ClCompile Include="TestCameraScript.cpp" />
