@@ -117,8 +117,11 @@
     <ClCompile Include="RenderTargetGroup.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="StructuredBuffered.cpp">
+    <ClCompile Include="StructuredBuffer.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>Object\Component</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,8 +218,11 @@
     <ClInclude Include="RenderTargetGroup.h">
       <Filter>Engine</Filter>
     </ClInclude>
-    <ClInclude Include="StructuredBuffered.h">
+    <ClInclude Include="StructuredBuffer.h">
       <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>Object\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
