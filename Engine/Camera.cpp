@@ -9,6 +9,7 @@
 #include "Material.h"
 #include "Shader.h"
 #include "ParticleSystem.h"
+#include "InstancingManager.h"
 
 Matrix Camera::S_MatView;
 Matrix Camera::S_MatProjection;
@@ -96,10 +97,7 @@ void Camera::Render_Deferred()
 	S_MatView = _matView;
 	S_MatProjection = _matProjection;
 
-	for (auto& gameObject : _vecDeffered)
-	{
-		gameObject->GetMeshRenderer()->Render();
-	}
+	GET_SINGLE(InstancingManager)->Render(_vecDeffered);
 }
 
 void Camera::Render_Forward()
@@ -107,10 +105,7 @@ void Camera::Render_Forward()
 	S_MatView = _matView;
 	S_MatProjection = _matProjection;
 
-	for (auto& gameObject : _vecForward)
-	{
-		gameObject->GetMeshRenderer()->Render();
-	}
+	GET_SINGLE(InstancingManager)->Render(_vecForward);
 
 	for (auto& gameObject : _vecParticle)
 	{
