@@ -47,6 +47,40 @@ void Transform::PushData()
 	transformParams.matProjection = Camera::S_MatProjection;
 	transformParams.matWV = _matWorld * Camera::S_MatView;
 	transformParams.matWVP = _matWorld * Camera::S_MatView * Camera::S_MatProjection;
+	transformParams.matViewInv = Camera::S_MatView.Invert();
 
 	CONST_BUFFER(CONSTANT_BUFFER_TYPE::TRANSFORM)->PushGraphicsData(&transformParams, sizeof(transformParams));
+}
+
+void Transform::LookAt(const Vec3& dir)
+{
+	// 내가 바라보고 싶은 벡터를 front
+	Vec3 front = dir;
+	front.Normalize();
+
+	Vec3 right = Vec3::Up.Cross(dir);
+	if (right == Vec3::Zero)
+		right = Vec3::Forward.Cross(dir);
+
+	right.Normalize();
+
+	Vec3 up = front.Cross(right);
+	up.Normalize();
+
+	Matrix matrix = XMMatrixIdentity();
+	matrix.Right(right);
+	matrix.Up(up);
+	matrix.Backward(front);
+
+	_localRotation = DecomposeRotationMatrix(matrix);
+}
+
+bool Transform::CloseEnough(const float& a, const float& b, const float& epsilon)
+{
+	return (epsilon > std::abs(a - b));
+}
+
+Vec3 Transform::DecomposeRotationMatrix(const Matrix& rotation)
+{
+	return Vec3();
 }

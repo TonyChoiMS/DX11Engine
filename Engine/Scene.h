@@ -15,8 +15,14 @@ public:
 	void FinalUpdate();
 
 	void Render();
+
+	void ClearRTV();
+	void RenderShadow();
+	void RenderDefferd();
 	void RenderLights();
 	void RenderFinal();
+
+	void RenderForward();
 
 private:
 	void PushLightData();

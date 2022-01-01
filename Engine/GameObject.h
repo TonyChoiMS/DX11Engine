@@ -36,6 +36,9 @@ public:
 
 	void SetLayerIndex(uint8 layer) { _layerIndex = layer; }
 	uint8 GetLayerIndex() { return _layerIndex; }
+
+	void SetStatic(bool flag) { _static = false; }
+	bool IsStatic() { return _static; }
 	
 private:
 	// 컴포넌트는 하나씩만 붙일 수 있기 때문에 최대 개수가 예측이 되기에 array 자료구조 사용합니다.
@@ -46,5 +49,6 @@ private:
 
 	bool _checkFrustum = true;
 	uint8 _layerIndex = 0;
+	bool _static = true;
 };
 

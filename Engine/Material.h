@@ -10,7 +10,8 @@ enum
 	MATERIAL_FLOAT_COUNT = 4,
 	MATERIAL_TEXTURE_COUNT = 4,
 	MATERIAL_VECTOR2_COUNT = 4,
-	MATERIAL_VECTOR4_COUNT = 4
+	MATERIAL_VECTOR4_COUNT = 4,
+	MATERIAL_MATRIX_COUNT = 4
 };
 
 struct MaterialParams
@@ -20,6 +21,7 @@ struct MaterialParams
 	void SetTexOn(uint8 index, int32 value) { texOnParams[index] = value; }
 	void SetVec2(uint8 index, Vec2 value) { vec2Params[index] = value; }
 	void SetVec4(uint8 index, Vec4 value) { vec4Params[index] = value; }
+	void SetMatrix(uint8 index, Matrix& value) { matrixParams[index] = value; }
 	
 	// array는 vector와 유사하지만, 동적 가변 배열은 아니고, 정적 크기 배열입니다.
 	// 배열을 Wrapping하는 클래스
@@ -30,6 +32,7 @@ struct MaterialParams
 	array<int32, MATERIAL_TEXTURE_COUNT> texOnParams;
 	array<Vec2, MATERIAL_VECTOR2_COUNT> vec2Params;
 	array<Vec4, MATERIAL_VECTOR4_COUNT> vec4Params;
+	array<Matrix, MATERIAL_MATRIX_COUNT> matrixParams;
 };
 
 
@@ -55,6 +58,8 @@ public:
 
 	void SetVec2(uint8 index, Vec2 value) { _params.SetVec2(index, value); }
 	void SetVec4(uint8 index, Vec4 value) { _params.SetVec4(index, value); }
+	void SetMatrix(uint8 index, Matrix& value) { _params.SetMatrix(index, value); }
+
 	void PushGraphicsData();
 	void PushComputeData();
 	void Dispatch(uint32 x, uint32 y, uint32 z);

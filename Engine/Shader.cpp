@@ -59,6 +59,7 @@ void Shader::CreateGraphicsShader(const wstring& path, ShaderInfo info, const st
 	_graphicsPipelineDesc.SampleDesc.Count = 1;
 	_graphicsPipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 
+	// RTVFormat과 실제 세팅된 Format이 다르면 제대로 렌더링 되지 않음.
 	switch (info.shaderType)
 	{
 	case SHADER_TYPE::DEFERRED:
@@ -79,6 +80,13 @@ void Shader::CreateGraphicsShader(const wstring& path, ShaderInfo info, const st
 	case SHADER_TYPE::PARTICLE:
 		_graphicsPipelineDesc.NumRenderTargets = 1;
 		_graphicsPipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
+		break;
+	case SHADER_TYPE::COMPUTE:
+		_graphicsPipelineDesc.NumRenderTargets = 0;
+		break;
+	case SHADER_TYPE::SHADOW:
+		_graphicsPipelineDesc.NumRenderTargets = 1;
+		_graphicsPipelineDesc.RTVFormats[0] = DXGI_FORMAT_R32_FLOAT;
 		break;
 	}
 
