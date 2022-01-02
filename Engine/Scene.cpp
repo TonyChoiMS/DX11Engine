@@ -58,7 +58,7 @@ void Scene::Render()
 	ClearRTV();
 
 	RenderShadow();
-	RenderDefferd();
+	RenderDeferrd();
 	RenderLights();
 	
 	RenderFinal();
@@ -75,7 +75,7 @@ void Scene::ClearRTV()
 	// Shadow Group 초기화
 	GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SHADOW)->ClearRenderTargetView();
 
-	// Deffered Group 초기화
+	// Deferred Group 초기화
 	GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->ClearRenderTargetView();
 
 	// Lighting Group 초기화
@@ -97,7 +97,7 @@ void Scene::RenderShadow()
 	GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::SHADOW)->WaitTargetToResource();
 }
 
-void Scene::RenderDefferd()
+void Scene::RenderDeferrd()
 {
 	// Deferred OMSet
 	GEngine->GetRTGroup(RENDER_TARGET_GROUP_TYPE::G_BUFFER)->OMSetRenderTargets();

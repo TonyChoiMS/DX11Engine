@@ -41,6 +41,7 @@ class Material : public Object
 public:
 	Material();
 	virtual ~Material();
+
 	shared_ptr<Shader> GetShader() { return _shader; }
 
 	void SetShader(shared_ptr<Shader> shader) { _shader = shader; }
@@ -49,10 +50,6 @@ public:
 	void SetTexture(uint8 index, shared_ptr<Texture> texture) 
 	{ 
 		_textures[index] = texture;
-		if (texture == nullptr)
-		{
-			printf("12344");
-		}
 		_params.SetTexOn(index, (texture == nullptr ? 0 : 1));
 	}
 

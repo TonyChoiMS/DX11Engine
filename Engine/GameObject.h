@@ -37,7 +37,7 @@ public:
 	void SetLayerIndex(uint8 layer) { _layerIndex = layer; }
 	uint8 GetLayerIndex() { return _layerIndex; }
 
-	void SetStatic(bool flag) { _static = false; }
+	void SetStatic(bool flag) { _static = flag; }
 	bool IsStatic() { return _static; }
 	
 private:

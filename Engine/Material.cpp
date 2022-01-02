@@ -4,10 +4,12 @@
 
 Material::Material() : Object(OBJECT_TYPE::MATERIAL)
 {
+
 }
 
 Material::~Material()
 {
+
 }
 
 void Material::PushGraphicsData()
@@ -50,7 +52,7 @@ void Material::PushComputeData()
 
 void Material::Dispatch(uint32 x, uint32 y, uint32 z)
 {
-	// CBV + SRV + setPipelineState
+	// CBV + SRV + SetPipelineState
 	PushComputeData();
 
 	// SetDescriptorHeaps + SetComputeRootDescriptorTable

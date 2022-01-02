@@ -18,7 +18,7 @@ public:
 
 	void ClearRTV();
 	void RenderShadow();
-	void RenderDefferd();
+	void RenderDeferrd();
 	void RenderLights();
 	void RenderFinal();
 

@@ -161,10 +161,9 @@ shared_ptr<Scene> SceneManager::LoadTestScene()
 			shared_ptr<Material> material = GET_SINGLE(Resources)->Get<Material>(L"GameObject");
 			// Instancing을 사용하는 방식
 			//material->SetInt(0, 1);
-			meshRenderer->SetMaterial(material->Clone());
 			// Instancing을 사용하지 않는 방식
-			/*material->SetInt(0, 0);
-			meshRenderer->SetMaterial(material->Clone());*/
+			material->SetInt(0, 0);
+			meshRenderer->SetMaterial(material->Clone());
 		}
 		obj->AddComponent(meshRenderer);
 		scene->AddGameObject(obj);

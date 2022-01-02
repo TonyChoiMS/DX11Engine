@@ -48,7 +48,7 @@ void Camera::SortGameObject()
 	const vector<shared_ptr<GameObject>>& gameObjects = scene->GetGameObjects();
 
 	_vecForward.clear();
-	_vecDeffered.clear();
+	_vecDeferred.clear();
 	_vecParticle.clear();
 
 	for (auto& gameObject : gameObjects)
@@ -76,7 +76,7 @@ void Camera::SortGameObject()
 			switch (shaderType)
 			{
 			case SHADER_TYPE::DEFERRED:
-				_vecDeffered.push_back(gameObject);
+				_vecDeferred.push_back(gameObject);
 				break;
 			case SHADER_TYPE::FORWARD:
 				_vecForward.push_back(gameObject);
@@ -90,7 +90,7 @@ void Camera::SortGameObject()
 	}
 }
 // 그림자 영향을 받을 오브젝트를 소팅.
-void Camera::SorShadowObject()
+void Camera::SortShadowObject()
 {
 	shared_ptr<Scene> scene = GET_SINGLE(SceneManager)->GetActiveScene();
 	const vector<shared_ptr<GameObject>>& gameObjects = scene->GetGameObjects();
@@ -128,7 +128,7 @@ void Camera::Render_Deferred()
 	S_MatView = _matView;
 	S_MatProjection = _matProjection;
 
-	GET_SINGLE(InstancingManager)->Render(_vecDeffered);
+	GET_SINGLE(InstancingManager)->Render(_vecDeferred);
 }
 
 void Camera::Render_Forward()

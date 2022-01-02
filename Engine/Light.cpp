@@ -61,7 +61,7 @@ void Light::Render()
 
 void Light::RenderShadow()
 {
-	_shadowCamera->GetCamera()->SorShadowObject();
+	_shadowCamera->GetCamera()->SortShadowObject();
 	_shadowCamera->GetCamera()->Render_Shadow();
 }
 

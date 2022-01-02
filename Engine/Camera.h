@@ -20,7 +20,7 @@ public:
 	PROJECTION_TYPE GetProjectionType() { return _type; }
 
 	void SortGameObject();
-	void SorShadowObject();
+	void SortShadowObject();
 
 	void Render_Deferred();
 	void Render_Forward();
@@ -66,7 +66,7 @@ private:
 	uint32 _cullingMask = 0;
 
 private:
-	vector<shared_ptr<GameObject>> _vecDeffered;
+	vector<shared_ptr<GameObject>> _vecDeferred;
 	vector<shared_ptr<GameObject>> _vecForward;
 	vector<shared_ptr<GameObject>> _vecParticle;
 	vector<shared_ptr<GameObject>> _vecShadow;
